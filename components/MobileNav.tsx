@@ -15,6 +15,7 @@ import { sidebarLinks } from "@/constants"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import Footer from "./Footer"
+import PlaidLink from "./PlaidLink"
 
 const MobileNav = ({ user }: MobileNavProps) => {
   const pathname = usePathname()
@@ -41,46 +42,51 @@ const MobileNav = ({ user }: MobileNavProps) => {
             </h1>
           </Link>
           <div className="mobilenav-sheet">
-            <SheetClose asChild>
-              <nav className="flex h-full flex-col gap-6 pt-16 text-white">
-                {sidebarLinks.map((item) => {
-                  const isActive =
-                    pathname === item.route ||
-                    pathname.startsWith(`${item.route}/`)
-                  return (
-                    <SheetClose asChild key={item.route}>
-                      <Link
-                        href={item.route}
-                        key={item.label}
-                        className={cn("mobilenav-sheet_close w-full", {
-                          "bg-bank-gradient": isActive,
-                        })}
-                      >
-                        <Image
-                          src={item.imgURL}
-                          alt={item.label}
-                          width={20}
-                          height={20}
-                          className={cn({
-                            "brightness-[3] invert-0": isActive,
-                          })}
-                        ></Image>
-
-                        <p
-                          className={cn("text-16 font-semibold text-black-2", {
-                            "text-white": isActive,
+            <div className="flex flex-col gap-6">
+              <SheetClose>
+                <nav className="flex h-full flex-col gap-6 pt-16 text-white">
+                  {sidebarLinks.map((item) => {
+                    const isActive =
+                      pathname === item.route ||
+                      pathname.startsWith(`${item.route}/`)
+                    return (
+                      <SheetClose key={item.route}>
+                        <Link
+                          href={item.route}
+                          key={item.label}
+                          className={cn("mobilenav-sheet_close w-full", {
+                            "bg-bank-gradient": isActive,
                           })}
                         >
-                          {item.label}
-                        </p>
-                      </Link>
-                    </SheetClose>
-                  )
-                })}
-                USER
-              </nav>
-            </SheetClose>
-            <Footer user={user} type="mobile"/>
+                          <Image
+                            src={item.imgURL}
+                            alt={item.label}
+                            width={20}
+                            height={20}
+                            className={cn({
+                              "brightness-[3] invert-0": isActive,
+                            })}
+                          ></Image>
+
+                          <p
+                            className={cn(
+                              "text-16 font-semibold text-black-2",
+                              {
+                                "text-white": isActive,
+                              }
+                            )}
+                          >
+                            {item.label}
+                          </p>
+                        </Link>
+                      </SheetClose>
+                    )
+                  })}
+                </nav>
+              </SheetClose>
+              <PlaidLink user={user} variant="ghost" />
+            </div>
+            <Footer user={user} type="mobile" />
           </div>
         </SheetContent>
       </Sheet>
