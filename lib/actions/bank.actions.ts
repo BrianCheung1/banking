@@ -84,7 +84,6 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
         type: transferData.senderBankId === bank.$id ? "debit" : "credit",
       })
     )
-     console.log(transferTransactions)
 
     // get institution info from plaid
     const institution = await getInstitution({

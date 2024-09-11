@@ -115,7 +115,7 @@ export async function getLoggedInUser() {
     const { account } = await createSessionClient()
 
     const result = await account.get()
-    const user = await getUserInfo({userId: result.$id})
+    const user = await getUserInfo({ userId: result.$id })
 
     return parseStringify(user)
   } catch (error) {
@@ -180,7 +180,6 @@ export const createBankAccount = async ({
         shareableId,
       }
     )
-    console.log(parseStringify(bankAccount))
     return parseStringify(bankAccount)
   } catch (error) {
     console.log(error)
@@ -283,7 +282,9 @@ export const getBank = async ({ documentId }: getBankProps) => {
   }
 }
 
-export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps) => {
+export const getBankByAccountId = async ({
+  accountId,
+}: getBankByAccountIdProps) => {
   try {
     const { database } = await createAdminClient()
     const bank = await database.listDocuments(
@@ -292,7 +293,7 @@ export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps)
       [Query.equal("accountId", [accountId])]
     )
 
-    if(bank.total !==1) return null
+    if (bank.total !== 1) return null
 
     return parseStringify(bank.documents[0])
   } catch (error) {
